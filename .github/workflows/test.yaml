@@ -1,0 +1,18 @@
+# .github/workflows/test.yml
+name: Test ML Model
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install scikit-learn
+      - name: Run prediction
+        run: python predict.py
