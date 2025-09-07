@@ -15,4 +15,4 @@ jobs:
       - name: Install dependencies
         run: pip install scikit-learn
       - name: Run prediction
-        run: python predict.py
+        run: python week1/predict.py
