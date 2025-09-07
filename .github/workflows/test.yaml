@@ -15,4 +15,5 @@ jobs:
       - name: Install dependencies
         run: pip install scikit-learn
       - name: Run prediction
-        run: python week1/predict.py
+        run: python predict.py
+        working-directory: week1  # 👈 THIS IS THE KEY — run from week1/
