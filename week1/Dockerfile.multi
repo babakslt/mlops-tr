@@ -1,0 +1,29 @@
+# Dockerfile.multi
+
+# STAGE 1; Train model
+FROM python:3.12-slim AS builder
+
+WORKDIR /app
+COPY . .
+RUN pip install scikit-learn
+RUN python model.py # Train and save the model.pkl
+
+# STAGE 2; Runtime image (lean)
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Copy only what is needed for inference
+COPY --from=builder /app/model.pkl .
+COPY predict.py .
+
+RUN pip install scikit-learn # needed for loading the model
+
+CMD ["python","predict.py"]
+
+
+# STAGE 3: Testing
+FROM python:3.12-slim AS tester
+COPY --from=builder /app/model.pkl .
+COPY test_model.py .
+RUN python test_model.py
